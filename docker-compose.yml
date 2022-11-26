@@ -3,7 +3,8 @@ version: '3.1'
 
 services:
 
-  mongo_node_1:
+  mongos:
+    container_name: mongos
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -11,29 +12,12 @@ services:
       MONGO_INITDB_DATABASE: ECACHAIN
     ports:
       - "27017:27017"
-
-  mongo_node_2:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: ECACHAIN
-    ports:
-      - "27018:27017"
-
-  mongo_node_3:
-    image: mongo
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_DATABASE: ECACHAIN
-    ports:
-      - "27019:27017"
-
-  redis:
-    image: "redis:alpine"
-    command: redis-server --requirepass 1234admin
-    ports:
-      - "6379:6379"
  
+  eca_chain_server:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: "eca-chain-server:latest"
+    ports:
+      - "3000:3000"
  
